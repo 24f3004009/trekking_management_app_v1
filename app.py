@@ -1,7 +1,8 @@
-from flask import Flask
+from flask import Flask,render_template
 from config import Config
 from extensions import db, login_manager
 from models import *
+from routes.auth import auth_bp
 
 def create_app():
     app = Flask(__name__)
@@ -13,6 +14,8 @@ def create_app():
     with app.app_context():
         db.create_all()
 
+    app.register_blueprint(auth_bp, url_prefix='/auth')
+    
     return app
 
 app = create_app()

@@ -1,11 +1,24 @@
-.header{
-    
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
 }
 
-.main-body{
-
+.container {
+    flex: 1;
 }
 
-.footer{
-    
+.footer {
+    background-color: #212529;
+    color: #ffffff;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 40px;
+    font-size: 0.9rem;
+}
+
+.footer a {
+    color: #ffffff;
+    text-decoration: underline;
 }
