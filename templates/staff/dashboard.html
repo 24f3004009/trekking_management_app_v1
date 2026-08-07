@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Staff Dashboard</h2>
+<p>Hello {{ current_user.name }}</p>
+
+<h4 class="mt-4">Your Assigned Treks ({{ assigned_treks|length }})</h4>
+
+{% if assigned_treks %}
+<table class="table table-bordered mt-2">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Slots</th>
+            <th>Registered Users</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for trek in assigned_treks %}
+        <tr>
+            <td>{{ trek.name }}</td>
+            <td>{{ trek.location }}</td>
+            <td>{{ trek.status }}</td>
+            <td>{{ trek.available_slots }}</td>
+            <td>{{ trek.bookings|selectattr('status', 'equalto', 'Booked')|list|length }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No treks assigned to you yet</p>
+{% endif %}
+{% endblock %}

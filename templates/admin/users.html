@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Manage Users</h2>
+
+<form method="GET" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Search by name" value="{{ search }}">
+        <button type="submit" class="btn btn-outline-secondary">Search</button>
+    </div>
+</form>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users_list %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.status }}</td>
+            <td>
+                {% if user.status == 'active' %}
+                <form method="POST" action="{{ url_for('admin.blacklist_user', user_id=user.id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm">Blacklist</button>
+                </form>
+                {% else %}
+                <form method="POST" action="{{ url_for('admin.reactivate_user', user_id=user.id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-secondary btn-sm">Reactivate</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -27,7 +27,7 @@ def register():
         db.session.commit()
 
         if role == 'staff':
-            profile = TrekStaff(user_id=new_user.id, approved=False)
+            profile = TrekStaff(user_id=new_user.id, approval=False)
             db.session.add(profile)
             db.session.commit()
 
@@ -54,7 +54,7 @@ def login():
             return redirect(url_for('auth.login'))
 
         if user.role == 'staff':
-            if not user.staff_profile or not user.staff_profile.approved:
+            if not user.staff_profile or not user.staff_profile.approval:
                 flash('Your staff account is pending admin approval', 'warning')
                 return redirect(url_for('auth.login'))
 

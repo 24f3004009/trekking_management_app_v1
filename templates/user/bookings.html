@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>My Bookings</h2>
+    <form method="GET" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Search by trek name or status" value="{{ search }}">
+            <button type="submit" class="btn btn-outline-secondary">Search</button>
+        </div>
+    </form>
+
+{% if bookings %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Trek</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.trek.name }}</td>
+            <td>{{ booking.booking_date.strftime('%d-%m-%Y') }}</td>
+            <td>{{ booking.status }}</td>
+            <td>
+                {% if booking.status == 'Booked' %}
+                <form method="POST" action="{{ url_for('user.cancel_booking', booking_id=booking.id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>You haven't booked any treks yet</p>
+{% endif %}
+{% endblock %}

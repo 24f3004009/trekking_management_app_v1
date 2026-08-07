@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Hi {{ current_user.name }}</h2>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card text-center p-3">
+            <h5>Open Treks</h5>
+            <h2>{{ open_treks_count }}</h2>
+            <a href="{{ url_for('user.show_treks') }}" class="btn btn-primary btn-sm mt-2">Browse</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center p-3">
+            <h5>My Active Bookings</h5>
+            <h2>{{ my_bookings_count }}</h2>
+            <a href="{{ url_for('user.my_bookings') }}" class="btn btn-secondary btn-sm mt-2">View</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -28,13 +28,13 @@ class Trek(db.Model):
     difficulty = db.Column(db.String(20)) # Easy | Moderate | Hard
     duration = db.Column(db.Integer) #number of days trek will last
     available_slots = db.Column(db.Integer, default=0)
-    assinged_staff_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    assigned_staff_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     status = db.Column(db.String(20), default='Pending') # Pending | Approved | Open | Closed | Completed
     start_date = db.Column(db.Date)
-    emd_date = db.Column(db.Date)
+    end_date = db.Column(db.Date)
 
-    assinged_staff = db.relationship('User', foreign_keys=[assinged_staff_id])
-    booking = db.relationship('Booking', backref='trek', lazy=True)
+    assigned_staff = db.relationship('User', foreign_keys=[assigned_staff_id])
+    bookings = db.relationship('Booking', backref='trek', lazy=True)
 
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
