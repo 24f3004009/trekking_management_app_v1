@@ -1,4 +1,5 @@
-from flask import Flask,render_template
+from flask import Flask,render_template, redirect, url_for
+from flask_login import current_user
 from werkzeug.security import generate_password_hash
 from config import Config
 from extensions import db, login_manager
@@ -37,6 +38,17 @@ def create_app():
     app.register_blueprint(staff_bp, url_prefix='/staff')
     app.register_blueprint(user_bp, url_prefix='/user')
 
+    @app.route('/')
+    def home():
+        if current_user.is_authenticated:
+            if current_user.role == 'admin':
+                return redirect(url_for('admin.dashboard'))
+            elif current_user.role == 'staff':
+                return redirect(url_for('staff.dashboard'))
+            else:
+                return redirect(url_for('user.dashboard'))
+        return redirect(url_for('auth.login'))
+
     return app
 
 app = create_app()
@@ -46,4 +58,4 @@ def hello_world():
     return "<p>oi mate, why r u here !!</p>"
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
