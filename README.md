@@ -17,7 +17,7 @@ python --version
 ```
 it should show the installed python version
 
-**step 3:** then we creat a virtual environment 
+**step 3:** then we create a virtual environment 
 
 in cmd/powershell:
 ```cmd
