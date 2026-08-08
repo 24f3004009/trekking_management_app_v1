@@ -14,6 +14,9 @@
     <thead>
         <tr>
             <th>Trek</th>
+            <th>Location</th>
+            <th>Duration (in Days)</th>
+            <th>Starting Date</th>
             <th>Booking Date</th>
             <th>Status</th>
             <th>Action</th>
@@ -23,13 +26,18 @@
         {% for booking in bookings %}
         <tr>
             <td>{{ booking.trek.name }}</td>
+            <td>{{ booking.trek.location }}</td>
+            <td>{{ booking.trek.duration }}</td>
+            <td>{{ booking.trek.start_date }}</td>
             <td>{{ booking.booking_date.strftime('%d-%m-%Y') }}</td>
             <td>{{ booking.status }}</td>
             <td>
-                {% if booking.status == 'Booked' %}
+                {% if booking.status == 'Booked' and booking.trek.status == 'Open' %}
                 <form method="POST" action="{{ url_for('user.cancel_booking', booking_id=booking.id) }}" style="display:inline;">
                     <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
                 </form>
+                {% else %}
+                Trek Closed or Completed.
                 {% endif %}
             </td>
         </tr>

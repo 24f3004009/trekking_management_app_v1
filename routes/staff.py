@@ -45,6 +45,12 @@ def update_trek(trek_id):
     if request.method == 'POST':
         trek.available_slots = int(request.form.get('available_slots'))
         trek.status = request.form.get('status')
+
+        if trek.status == 'Completed':
+            for booking in trek.bookings:
+                if booking.status == 'Booked':
+                    booking.status = 'Completed'
+
         db.session.commit()
         flash('Trek updated successfully.', 'success')
         return redirect(url_for('staff.my_treks'))

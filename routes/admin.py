@@ -96,6 +96,12 @@ def edit_trek(trek_id):
         trek.status = request.form.get('status')
         trek.start_date = datetime.strptime(request.form.get('start_date'), '%Y-%m-%d').date()
         trek.end_date = datetime.strptime(request.form.get('end_date'), '%Y-%m-%d').date()
+
+        if trek.status == 'Completed':
+            for booking in trek.bookings:
+                if booking.status == 'Booked':
+                    booking.status = 'Completed'
+
         db.session.commit()
         flash('Trek updated successfully !', 'success')
         return redirect(url_for('admin.manage_treks'))
